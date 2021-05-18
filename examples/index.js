@@ -1,4 +1,25 @@
 const manifestUri = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4';
+let ShakaPlugin = require('../plugins/build/test.js')
+
+const thumbnailImages = [
+  {
+    src: './assets/big-bunny-1-320-2-160-90.jpeg',
+    width: 160,
+    height: 90,
+    row: 20,
+    displayTime: 2,
+    startTime: 0,
+    endTime: 320
+  },
+  {
+    src: './assets/big-bunny-2-276-2-160-90.jpeg',
+    width: 160,
+    height: 90,
+    row: 20,
+    displayTime: 2,
+    startTime: 320,
+  }
+]
 
 function initApp() {
   // Install built-in polyfills to patch browser incompatibilities.
@@ -41,82 +62,83 @@ async function initPlayer() {
     onPlayerError(error);
   }
 
-  // Thumbnail
-  const seekBar = document.getElementsByClassName('shaka-seek-bar')
-  if(video && video.duration && player && seekBar) {
-    let thumbnail = document.createElement('img')
-    thumbnail.id = 'thumbnail'
-    thumbnail.src= './assets/big-bunny-1-320-2-160-90.jpeg'
-    thumbnail.className = 'shaka-thumbnail'
-    thumbnail.style.position = 'absolute'
-    thumbnail.style.display = 'none'
-
-    container.appendChild(thumbnail)
-
-    seekBar[0].addEventListener('mousemove', mouseEnter)
-    seekBar[0].addEventListener('mouseleave', mouseLeave)
-    seekBar[0].addEventListener('touchmove', mouseEnter)
-    seekBar[0].addEventListener('touchend', mouseLeave)
-    seekBar[0].addEventListener('touchcancel', mouseLeave)
-  }
+  let ShakaPlugin = new ShakaPlugin(video, thumbnailImages)
+  ShakaPlugin.initialize()
 }
 
-function mouseEnter(event) {
-  const video = document.getElementById('video')
-  const seekBar = document.getElementsByClassName('shaka-seek-bar')
-  const thumbnail = document.getElementById('thumbnail')
+// function mouseEnter(event) {
+//   const video = document.getElementById('video')
+//   const seekBar = document.getElementsByClassName('shaka-seek-bar')
 
-  var rect = video.getBoundingClientRect()
+//   const DISTANCE_BETWEEN_PROGRESS_BAR_AND_THUMBNAIL = 150
 
-  const THUMBNAIL_DURATION = 2
-  const THUMBNAIL_WIDTH = 160
-  const THUMBNAIL_HEIGHT = 90
-  const THUMBNAIL_ROW = 20
-  const DISTANCE_BETWEEN_PROGRESS_BAR_AND_THUMBNAIL = 150
+//   var rect = video.getBoundingClientRect()
+  
+//   // Margin left of Video tag
+//   const marginLeftBetweenWindowAndVideo = rect.left
 
-  // Calculate 1 thumbnail takes how many pixel
-  const thumbnailPixel = seekBar[0].offsetWidth / (video.duration / THUMBNAIL_DURATION)
-  // Because the seekBar is the center of the video and the video is the center of the window
+//   // Because the seekBar is the center of the video 
+//   const marginBetweenVideoAndSeekbar =
+//     (video.offsetWidth - seekBar[0].offsetWidth) / 2
+//   let realEvent =
+//     event.clientX -
+//     marginBetweenVideoAndSeekbar -
+//     marginLeftBetweenWindowAndVideo
 
-  const marginLeftBetweenWindowAndVideo = rect.left
-  const marginBetweenWindowAndVideo =
-    (window.innerWidth - video.offsetWidth) / 2
-  const marginBetweenVideoAndSeekbar =
-    (video.offsetWidth - seekBar[0].offsetWidth) / 2
-  let realEvent =
-    event.clientX -
-    marginBetweenVideoAndSeekbar -
-    marginBetweenWindowAndVideo
+//   const startPositionOfProgressBar = marginLeftBetweenWindowAndVideo + marginBetweenVideoAndSeekbar
 
-  if (realEvent < 0) {
-    realEvent = 0
-  }
-  if (realEvent > seekBar[0].offsetWidth) {
-    realEvent = seekBar[0].offsetWidth
-  }
-  const row = Math.floor((realEvent / thumbnailPixel) % THUMBNAIL_ROW)
-  const column = Math.floor(realEvent / (THUMBNAIL_ROW * thumbnailPixel))
+//   const tmv = thumbnailImages.filter(tm => (event.clientX - startPositionOfProgressBar - seekBar[0].offsetWidth * (tm.endTime ? tm.endTime : video.duration) / video.duration) < 0)[0]
+//   const tmi = thumbnailImages.findIndex(tm => (event.clientX - startPositionOfProgressBar - seekBar[0].offsetWidth * (tm.endTime ? tm.endTime : video.duration) / video.duration) < 0)
 
-  thumbnail.style.display = 'block'
-  seekBar[0].style.cursor = 'pointer'
-  thumbnail.style.left =
-    event.clientX -
-    thumbnail.clientWidth / THUMBNAIL_ROW +
-    80 -
-    marginLeftBetweenWindowAndVideo -
-    THUMBNAIL_WIDTH * row +
-    'px'
-  thumbnail.style.top = rect.height - DISTANCE_BETWEEN_PROGRESS_BAR_AND_THUMBNAIL - THUMBNAIL_HEIGHT * column + 'px'
-  thumbnail.style.clip = `rect(${THUMBNAIL_HEIGHT * column}px, ${THUMBNAIL_WIDTH *
-    (row + 1)}px, ${THUMBNAIL_HEIGHT * (column + 1)}px, ${THUMBNAIL_WIDTH * row}px)`
-}
+//   if(tmv && tmi !== null) {
+//     const thumbnailPixel = seekBar[0].offsetWidth / (video.duration / tmv.displayTime)
 
-function mouseLeave(event) {
-  const thumbnail = document.getElementById('thumbnail')
-  if (thumbnail) {
-    thumbnail.style.display = 'none'
-  }
-}
+//     const thumbnail = document.getElementById('thumbnail-' + tmi)
+
+//     if (realEvent < 0) {
+//       realEvent = 0
+//     }
+
+//     if (realEvent > (seekBar[0].offsetWidth - marginBetweenVideoAndSeekbar)) {
+//       realEvent = seekBar[0].offsetWidth - marginBetweenVideoAndSeekbar
+//     }
+//     const row = Math.floor((realEvent / thumbnailPixel) % tmv.row)
+//     let column = Math.floor(realEvent / (tmv.row * thumbnailPixel))
+
+//     for(let v of thumbnailImages) {
+//       console.log(video.duration)
+//     }
+    
+//     if(column >= 7) {
+//       column = column - 7
+//     }
+
+//     thumbnail.style.display = 'block'
+//     seekBar[0].style.cursor = 'pointer'
+//     thumbnail.style.left =
+//       event.clientX -
+//       thumbnail.clientWidth / tmv.row +
+//       80 -
+//       marginLeftBetweenWindowAndVideo -
+//       tmv.width * row +
+//       'px'
+
+//     thumbnail.style.top = rect.height - DISTANCE_BETWEEN_PROGRESS_BAR_AND_THUMBNAIL - tmv.height * column + 'px'
+//     console.log(`rect(${tmv.height * column}px, ${tmv.width *
+//       (row + 1)}px, ${tmv.height * (column + 1)}px, ${tmv.width * row}px)`)
+//     thumbnail.style.clip = `rect(${tmv.height * column}px, ${tmv.width *
+//       (row + 1)}px, ${tmv.height * (column + 1)}px, ${tmv.width * row}px)`
+//   }
+// }
+
+// function mouseLeave() {
+//   for(i = 0; i < thumbnailImages.length; i++) {
+//     const thumbnail = document.getElementById('thumbnail-' + i)
+//     if (thumbnail) {
+//       thumbnail.style.display = 'none'
+//     }
+//   }
+// }
 
 function onPlayerErrorEvent(event) {
   // Extract the shaka.util.Error object from the event.

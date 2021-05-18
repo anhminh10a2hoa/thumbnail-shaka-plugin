@@ -1,0 +1,35 @@
+{
+  "name": "shaka-player-plugin",
+  "version": "0.0.1",
+  "description": "Shaka player plugin",
+  "main": "index.js",
+  "type": "module",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc --project ./"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anhminh10a2hoa/shaka-player-plugin.git"
+  },
+  "keywords": [
+    "shaka-player",
+    "shaka-player-plugin",
+    "shaka-player-thumbnail",
+    "thumbnail",
+    "shaka-plugin",
+    "thumbnail-plugin"
+  ],
+  "author": "Minh Hoang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/anhminh10a2hoa/shaka-player-plugin/issues"
+  },
+  "homepage": "https://github.com/anhminh10a2hoa/shaka-player-plugin#readme",
+  "devDependencies": {
+    "typescript": "^4.2.4"
+  }
+}
