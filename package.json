@@ -3,7 +3,6 @@
   "version": "0.0.1",
   "description": "Shaka player plugin",
   "main": "index.js",
-  "type": "module",
   "directories": {
     "example": "examples"
   },
@@ -29,7 +28,7 @@
     "url": "https://github.com/anhminh10a2hoa/shaka-player-plugin/issues"
   },
   "homepage": "https://github.com/anhminh10a2hoa/shaka-player-plugin#readme",
-  "devDependencies": {
-    "typescript": "^4.2.4"
+  "dependencies": {
+    "shaka-player-plugin-test": "^0.0.1"
   }
 }
