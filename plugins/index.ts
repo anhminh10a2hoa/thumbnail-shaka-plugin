@@ -30,11 +30,11 @@ class ShakaPlugin {
      
       for (let i: number = 0; i < seekBar.length; i++) {
         if (seekBar[i] instanceof HTMLElement) {
-          seekBar[i].addEventListener('mousemove', this.mouseEnter)
-          seekBar[i].addEventListener('mouseleave', this.mouseLeave)
-          seekBar[i].addEventListener('touchmove', this.mouseEnter)
-          seekBar[i].addEventListener('touchend', this.mouseLeave)
-          seekBar[i].addEventListener('touchcancel', this.mouseLeave)
+          seekBar[i].addEventListener('mousemove', this.mouseEnter.bind(this));
+          seekBar[i].addEventListener('mouseleave', this.mouseLeave.bind(this));
+          seekBar[i].addEventListener('touchmove', this.mouseEnter.bind(this));
+          seekBar[i].addEventListener('touchend', this.mouseLeave.bind(this));
+          seekBar[i].addEventListener('touchcancel', this.mouseLeave.bind(this));
         }
       }
     }
@@ -82,21 +82,18 @@ class ShakaPlugin {
               }
             }
             
-            thumbnail.style.display = 'block'
-            sb.style.cursor = 'pointer'
-            thumbnail.style.left =
-              event.clientX -
-              thumbnail.clientWidth / tmv.row +
-              80 -
-              mlv -
-              tmv.width * row +
-              'px'
-  
-            thumbnail.style.top = rect.height - DBPT - tmv.height * column + 'px'
-            console.log(`rect(${tmv.height * column}px, ${tmv.width *
-              (row + 1)}px, ${tmv.height * (column + 1)}px, ${tmv.width * row}px)`)
+            sb.style.cursor = 'pointer';
             thumbnail.style.clip = `rect(${tmv.height * column}px, ${tmv.width *
-              (row + 1)}px, ${tmv.height * (column + 1)}px, ${tmv.width * row}px)`
+                (row + 1)}px, ${tmv.height * (column + 1)}px, ${tmv.width * row}px)`;
+            thumbnail.style.left =
+                event.clientX -
+                    thumbnail.clientWidth / tmv.row + 
+                    80 -
+                    tmv.width * row +
+                    'px';
+            thumbnail.style.top = rect.height - DBPT - tmv.height * column + 'px';
+            thumbnail.style.display = 'block';
+            document.body.style.overflow = "hidden";
           }
         }
       }

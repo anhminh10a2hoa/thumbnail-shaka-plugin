@@ -109,10 +109,6 @@ class ShakaPlugin {
       return Math.round(thumbnail.clientHeight / this.options.thumbnails[index - 1].height)
     }
   }
-
-  // getThumbnailByColumn(column) {
-
-  // }
 }
 
 module.exports = ShakaPlugin;
