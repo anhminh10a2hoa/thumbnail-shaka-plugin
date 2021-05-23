@@ -43,7 +43,7 @@ const options = {
     }
   ]
 }
-const ShakaPlugin = require('./index.js')
+const ShakaPlugin = require('../../node_modules/shaka-player-plugin-test/dist/index')
 
 export default {
   props: {

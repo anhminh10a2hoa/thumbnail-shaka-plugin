@@ -7306,10 +7306,12 @@ sha.js@^2.4.0, sha.js@^2.4.8:
     inherits "^2.0.1"
     safe-buffer "^5.0.1"
 
-shaka-player-plugin-test@^0.0.3:
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/shaka-player-plugin-test/-/shaka-player-plugin-test-0.0.3.tgz#5f7539a738d4be275fb58760805984acbf494804"
-  integrity sha512-gQh92VwikF5S7bnfaSsXDqkdttgsy8NvJLjxg0qyFPyC2OiGiBibErb3a+UtfBehQx1JStWVsv+efSpeXXhM9A==
+shaka-player-plugin-test@^0.0.6:
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/shaka-player-plugin-test/-/shaka-player-plugin-test-0.0.6.tgz#336de8386a05eee729c8531c56271ee0c56d6155"
+  integrity sha512-5Fi2z8d5R+HjY9Mmz+pph8adZg/SbxAck6QlCYS7U7eFQYTPop2zGkwTfCKUYP8s3SiLnmcgR3iIUWcGYCqsAQ==
+  dependencies:
+    typescript "^4.2.4"
 
 shaka-player@^3.1.0:
   version "3.1.0"
@@ -8028,6 +8030,11 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
+
+typescript@^4.2.4:
+  version "4.2.4"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.2.4.tgz#8610b59747de028fda898a8aef0e103f156d0961"
+  integrity sha512-V+evlYHZnQkaz8TRBuxTA92yZBPotr5H+WhQ7bD3hZUndx5tGOa1fuCgeSjxAzM1RiN5IzvadIXTVefuuwZCRg==
 
 uglify-js@3.4.x:
   version "3.4.10"

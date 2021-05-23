@@ -10,7 +10,7 @@
   "dependencies": {
     "core-js": "^3.6.5",
     "shaka-player": "^3.1.0",
-    "shaka-player-plugin-test": "^0.0.3",
+    "shaka-player-plugin-test": "^0.0.6",
     "vue": "^3.0.0"
   },
   "devDependencies": {

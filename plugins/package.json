@@ -1,13 +1,14 @@
 {
   "name": "shaka-player-plugin-test",
-  "version": "0.0.3",
+  "version": "0.0.6",
   "description": "Shaka player plugin",
   "main": "index.js",
   "directories": {
     "example": "examples"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc --project ./"
   },
   "repository": {
     "type": "git",
@@ -26,5 +27,8 @@
   "bugs": {
     "url": "https://github.com/anhminh10a2hoa/shaka-player-plugin/issues"
   },
-  "homepage": "https://github.com/anhminh10a2hoa/shaka-player-plugin#readme"
+  "homepage": "https://github.com/anhminh10a2hoa/shaka-player-plugin#readme",
+  "dependencies": {
+    "typescript": "^4.2.4"
+  }
 }
