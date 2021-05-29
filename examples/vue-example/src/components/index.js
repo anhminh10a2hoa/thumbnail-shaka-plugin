@@ -7,21 +7,21 @@ class ShakaPlugin {
   initialize() {
     const seekBar = document.getElementsByClassName('shaka-seek-bar')
     if(this.video && this.video.duration && seekBar) {
-      for(let [index, value] of this.options.thumbnails.entries()) {
-        let thumbnail = document.createElement('img')
-        thumbnail.originalHeight = thumbnail.clientHeight
-        thumbnail.id = 'thumbnail-' + index
-        thumbnail.src = value.src
-        thumbnail.className = 'shaka-thumbnail-' + index
-        thumbnail.style.position = 'absolute'
-        thumbnail.style.display = 'none'
-        if(this.video.parentNode) {
-          this.video.parentNode.appendChild(thumbnail)
-        } else {
-          const parent = document.body
-          parent.appendChild(thumbnail)
-        }
-      }
+      // for(let [index, value] of this.options.thumbnails.entries()) {
+      //   let thumbnail = document.createElement('img')
+      //   thumbnail.originalHeight = thumbnail.clientHeight
+      //   thumbnail.id = 'thumbnail-' + index
+      //   thumbnail.src = value.src
+      //   thumbnail.className = 'shaka-thumbnail-' + index
+      //   thumbnail.style.position = 'absolute'
+      //   thumbnail.style.display = 'none'
+      //   if(this.video.parentNode) {
+      //     this.video.parentNode.appendChild(thumbnail)
+      //   } else {
+      //     const parent = document.body
+      //     parent.appendChild(thumbnail)
+      //   }
+      // }
      
       for (let i = 0; i < seekBar.length; i++) {
         if (seekBar[i] instanceof HTMLElement) {
@@ -57,37 +57,57 @@ class ShakaPlugin {
         if(tmv && tmi !== null) {
           const thumbnailPixel = seekBar[i].offsetWidth / (this.video.duration / tmv.displayTime)
 
-          const thumbnail = document.getElementById('thumbnail-' + tmi)
+          if (myEvent < 0) {
+            myEvent = 0
+          }
 
-          if(thumbnail) {
-            if (myEvent < 0) {
-              myEvent = 0
-            }
-  
-            if (myEvent > (seekBar[i].offsetWidth - mbvs)) {
-              myEvent = seekBar[i].offsetWidth - mbvs
-            }
-            const row = Math.floor((myEvent / thumbnailPixel) % tmv.row)
-            let column = Math.floor(myEvent / (tmv.row * thumbnailPixel))
-            console.log(column)
-  
-            if(column >= this.getColumnThumbnail(tmi)) {
-              column = column - this.getColumnThumbnail(tmi) + 1
-            }
-  
-            thumbnail.style.display = 'block'
-            seekBar[i].style.cursor = 'pointer'
-            thumbnail.style.left =
-              event.clientX -
-              thumbnail.clientWidth / tmv.row +
-              80 -
-              mlv -
-              tmv.width * row +
-              'px'
-  
-            thumbnail.style.top = rect.height - 150 - tmv.height * column + 'px'
-            thumbnail.style.clip = `rect(${tmv.height * column}px, ${tmv.width *
-              (row + 1)}px, ${tmv.height * (column + 1)}px, ${tmv.width * row}px)`
+          if (myEvent > (seekBar[i].offsetWidth - mbvs)) {
+            myEvent = seekBar[i].offsetWidth - mbvs
+          }
+
+          let tmiTemp = null
+          if(tmv !== tmiTemp) {
+            tmiTemp = tmi
+          }
+          const thumbnailEl = document.getElementsByClassName('shaka-thumbnail')
+          for(let i = 0; i < thumbnailEl.length; i++) {
+            thumbnailEl[i].remove()
+          }
+
+          seekBar[i].style.cursor = 'pointer'
+          let thumbnail = document.createElement('img')
+          thumbnail.originalHeight = thumbnail.clientHeight
+          thumbnail.id = 'shaka-thumbnail'
+          thumbnail.src = tmv.src
+          thumbnail.className = 'shaka-thumbnail'
+          thumbnail.style.position = 'absolute'
+
+          const row = Math.floor((myEvent / thumbnailPixel) % tmv.row)
+          let column = Math.floor(myEvent / (tmv.row * thumbnailPixel))
+
+          if(column >= 7) {
+            column = column - 7
+          }
+
+          thumbnail.style.left =
+            event.clientX -
+            thumbnail.clientWidth / tmv.row +
+            80 - 150 -
+            mlv -
+            tmv.width * row +
+            'px'
+
+          thumbnail.style.top = rect.height - 150 - tmv.height * column + 'px'
+          thumbnail.style.clip = `rect(${tmv.height * column}px, ${tmv.width *
+            (row + 1)}px, ${tmv.height * (column + 1)}px, ${tmv.width * row}px)`
+
+          document.body.style.overflow = 'hidden'
+
+          if(this.video.parentNode) {
+            this.video.parentNode.appendChild(thumbnail)
+          } else {
+            const parent = document.body
+            parent.appendChild(thumbnail)
           }
         }
       }
@@ -95,17 +115,15 @@ class ShakaPlugin {
   }
 
   mouseLeave() {
-    for(let i = 0; i < this.options.thumbnails.length; i++) {
-      const thumbnail = document.getElementById('thumbnail-' + i)
-      if (thumbnail) {
-        thumbnail.style.display = 'none'
-      }
+    const thumbnail = document.getElementsByClassName('shaka-thumbnail')
+    for(let i = 0; i < thumbnail.length; i++) {
+      thumbnail[i].remove()
     }
   }
 
   getColumnThumbnail(index) {
     if(index > 0) {
-      const thumbnail = document.getElementById('thumbnail-' + (index - 1))
+      const thumbnail = document.getElementById('shaka-thumbnail')
       return Math.round(thumbnail.clientHeight / this.options.thumbnails[index - 1].height)
     }
   }

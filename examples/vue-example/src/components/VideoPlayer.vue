@@ -43,7 +43,8 @@ const options = {
     }
   ]
 }
-const ShakaPlugin = require('../../node_modules/shaka-player-plugin-test/dist/index')
+// import ShakaPlugin from '../../node_modules/shaka-player-plugin-test/dist/index'
+const ShakaPlugin = require('./index')
 
 export default {
   props: {
