@@ -36,6 +36,7 @@ class ShakaPlugin {
   }
 
   mouseEnter(event) {
+    
     const seekBar = document.getElementsByClassName('shaka-seek-bar')
     for (let i = 0; i < seekBar.length; i++) {
       if (seekBar[i] instanceof HTMLElement) {
@@ -48,6 +49,29 @@ class ShakaPlugin {
         const mbvs = (this.video.offsetWidth - seekBar[i].offsetWidth) / 2
         // Your real event on the progress bar
         let myEvent = event.clientX - mlv - mbvs
+
+
+        // console.log(myEvent)
+        // console.log(seekBar[i].offsetWidth)
+
+        if (myEvent < 0) {
+          myEvent = 0
+        }
+
+        // if (myEvent > seekBar[i].offsetWidth) {
+        //   myEvent = seekBar[i].of 
+        // }
+
+        if(this.video.duration <= 0) {
+          return '00:00'
+        } else if(this.video.duration < 60) {
+          console.log(Math.floor(myEvent / seekBar[i].offsetWidth * 60))
+          return `00:${Math.floor(myEvent / seekBar[i].offsetWidth * 60)}`
+        } else if(this.video.duration < 3600) {
+          console.log(`${Math.floor((this.video.duration / seekBar[i].offsetWidth * myEvent) / 60)}:${Math.floor((this.video.duration / seekBar[i].offsetWidth * myEvent) % 60)}`)
+          return `${Math.floor((seekBar[i].offsetWidth / myEvent) % 60)}:${Math.floor(myEvent / seekBar[i].offsetWidth * 60)}`
+        }
+
         // Start position of the progress bar
         const sppb = mlv + mbvs
 

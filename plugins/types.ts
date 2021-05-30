@@ -10,7 +10,6 @@ export interface Thumbnail {
 
 export interface Option {
   thumbnails: Array<Thumbnail>,
-  // distance between progress bar and thumbnail images
   // default: 150
   top?: number
 }
